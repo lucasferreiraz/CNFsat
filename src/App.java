@@ -14,7 +14,7 @@ import semantic.Semantics;
 
 public class App {
     public static void main(String[] args) throws Exception {
-
+        
         List<String> attributes = new ArrayList<>();
         List<List<String>> values = new ArrayList<>();
         readData(attributes, values, args[0]);

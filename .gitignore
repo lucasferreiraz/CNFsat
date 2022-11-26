@@ -3,7 +3,6 @@
 
 ### Eclipse ###
 .metadata
-bin/
 tmp/
 *.tmp
 *.bak
@@ -81,7 +80,6 @@ local.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -94,7 +92,6 @@ hs_err_pid*
 replay_pid*
 
 ### VisualStudioCode ###
-.vscode/*
 
 # Local History for Visual Studio Code
 .history/
