@@ -116,30 +116,40 @@ public class Restrictions {
         return listTwo;
     }
 
-    public static And restrictionFour(Integer m, List<String> attributes, List<List<String>> values, Integer patients){
-        List<Formula> listOne = new ArrayList<>();
-        List<Formula> listTwo = new ArrayList<>();
+    public static List<List<Integer>> restrictionFour(Integer m, List<String> attributes, List<List<String>> values, Integer patients){
+        List<Integer> listOne = new ArrayList<>();
+        List<List<Integer>> listTwo = new ArrayList<>();
 
-        for(int p = 0; p < patients; p++){
-            if(values.get(p).get(attributes.indexOf("P")).equals("1")){
+        for(int j = 0; j < patients; j++){
+            if(values.get(j).get(attributes.indexOf("P")).equals("1")){
                 for (int rule = 1; rule <= m ; rule++){
                     for (String attribute : attributes){
                         if(!attribute.equals("P")){
-                            if(values.get(p).get(attributes.indexOf(attribute)).equals("0")){
-                                listOne.add(new Implies(new Atomic(attribute + "_" + rule + "_" + "le"), new Not(new Atomic("C_" + rule + "_" + (p+1)))));
+                            if(values.get(j).get(attributes.indexOf(attribute)).equals("0")){
+                                listOne.add(
+                                    -IDGenerator.Generate(atomicFactory(attribute, rule, "le"))
+                                );
+                                listOne.add(
+                                    -IDGenerator.Generate(atomicFactory(rule, j))
+                                );
                             } else {
-                                listOne.add(new Implies(new Atomic(attribute + "_" + rule + "_" + "gt"), new Not(new Atomic("C_" + rule + "_" + (p+1)))));
+                                listOne.add(
+                                    -IDGenerator.Generate(atomicFactory(attribute, rule, "gt"))
+                                );
+                                listOne.add(
+                                    -IDGenerator.Generate(atomicFactory(rule, j))
+                                );
                             }
-                        }
-                    }
 
-                    listTwo.add(Semantics.bigAnd(listOne));
-                    listOne.clear();
+                            listTwo.add(List.copyOf(listOne));
+                        }
+                        listOne.clear();
+                    }
                 }
             }
         }
 
-        return Semantics.bigAnd(listTwo);
+        return listTwo;
     }
 
     public static And restrictionFive(Integer m, List<String> attributes, List<List<String>> values, Integer patients){
@@ -163,6 +173,10 @@ public class Restrictions {
     //Auxiliar methods
     private static Atomic atomicFactory(String attribute, int rule, String type){
         return new Atomic(attribute + "_" + rule + "_" + type);
+    }
+
+    private static Atomic atomicFactory(int rule, int patient){
+        return new Atomic("C_" + rule + "_" + patient);
     }
 
 }
