@@ -84,9 +84,9 @@ public class Restrictions {
         return Semantics.bigAnd(listTwo);
     }
 
-    public static And restrictionThree(Integer m, List<String> attributes, List<List<String>> values, Integer patients){
-        List<Formula> listOne = new ArrayList<>();
-        List<Formula> listTwo = new ArrayList<>();
+    public static List<List<Integer>> restrictionThree(Integer m, List<String> attributes, List<List<String>> values, Integer patients){
+        List<Integer> listOne = new ArrayList<>();
+        List<List<Integer>> listTwo = new ArrayList<>();
 
         for (int j = 0; j < patients; j++) {
 
@@ -96,21 +96,24 @@ public class Restrictions {
                 for (int rule = 1; rule <= m; rule++) {
                     for (String attribute : attributes) {
                         if (!attribute.equals("P")) {
-                            //Boolean retornoAdd = checkValue ? listOne.add(new Atomic(attribute + rule + "le")) : listOne.add(new Atomic(attribute + rule + "le"));
                             if (values.get(j).get(attributes.indexOf(attribute)).equals("0")) {
-                                listOne.add(new Atomic(attribute + "_" + rule + "_" + "le"));
+                                listOne.add(
+                                    IDGenerator.Generate(atomicFactory(attribute, rule, "le"))
+                                );
                             } else {
-                                listOne.add(new Atomic(attribute + "_" + rule + "_" + "gt"));
+                                listOne.add(
+                                    IDGenerator.Generate(atomicFactory(attribute, rule, "gt"))
+                                );
                             }
                         }
                     }
-                    listTwo.add(Semantics.bigOr(listOne));
+                    listTwo.add(List.copyOf(listOne));
                     listOne.clear();
                 }
             }
         }
 
-        return Semantics.bigAnd(listTwo);
+        return listTwo;
     }
 
     public static And restrictionFour(Integer m, List<String> attributes, List<List<String>> values, Integer patients){
