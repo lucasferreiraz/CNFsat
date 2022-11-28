@@ -1,4 +1,4 @@
-package restrictions;
+    package restrictions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,43 +8,62 @@ import abstractions.formulas.Formula;
 import abstractions.operators.And;
 import abstractions.operators.Implies;
 import abstractions.operators.Not;
+import functions.IDGenerator;
 import semantic.Semantics;
 
 public class Restrictions {
 
-    public static And restrictionOne(Integer m, List<String> attributes){
-        List<Formula> listOne = new ArrayList<>();
-        List<Formula> listTwo = new ArrayList<>();
-        List<Formula> listThree = new ArrayList<>();
+    public static List<List<Integer>> restrictionOne(Integer m, List<String> attributes){
+        List<Integer> listOne = new ArrayList<>();
+        List<List<Integer>> listTwo = new ArrayList<>();
 
         for (int rule = 1; rule <= m ; rule++) {
             for (String attribute : attributes) {
                 if(!attribute.equals("P")){
-                    listOne.add(new Atomic(attribute + "_" + rule + "_" + "gt"));
-                    listOne.add(new Not(new Atomic(attribute + "_" + rule + "_" + "le")));
-                    listOne.add(new Not(new Atomic(attribute + "_" + rule + "_" + "s")));
-                    listTwo.add(Semantics.bigAnd(listOne));
+                    listOne.add(
+                        IDGenerator.Generate(atomicFactory(attribute, rule, "le"))
+                        );
+                    listOne.add(
+                        IDGenerator.Generate(atomicFactory(attribute, rule, "gt"))
+                    );
+                    listOne.add(
+                        IDGenerator.Generate(atomicFactory(attribute, rule, "s"))
+                    );
+                    listTwo.add(List.copyOf(listOne));
                     listOne.clear();
 
-                    listOne.add(new Not(new Atomic(attribute + "_" + rule + "_" + "gt")));
-                    listOne.add(new Atomic(attribute + "_" + rule + "_" + "le"));
-                    listOne.add(new Not(new Atomic(attribute + "_" + rule + "_" + "s")));
-                    listTwo.add(Semantics.bigAnd(listOne));
+                    listOne.add(
+                        -IDGenerator.Generate(atomicFactory(attribute, rule, "le"))
+                    );
+                    listOne.add(
+                        -IDGenerator.Generate(atomicFactory(attribute, rule, "gt"))
+                    );
+                    listTwo.add(List.copyOf(listOne));
                     listOne.clear();
 
-                    listOne.add(new Not(new Atomic(attribute + "_" + rule + "_" + "gt")));
-                    listOne.add(new Not(new Atomic(attribute + "_" + rule + "_" + "le")));
-                    listOne.add(new Atomic(attribute + "_" + rule + "_" + "s"));
-                    listTwo.add(Semantics.bigAnd(listOne));
+                    listOne.add(
+                        -IDGenerator.Generate(atomicFactory(attribute, rule, "le"))
+                    );
+                    listOne.add(
+                        -IDGenerator.Generate(atomicFactory(attribute, rule, "s"))
+                    );
+                    listTwo.add(List.copyOf(listOne));
                     listOne.clear();
 
-                    listThree.add(Semantics.bigOr(listTwo));
-                    listTwo.clear();
+                    listOne.add(
+                        -IDGenerator.Generate(atomicFactory(attribute, rule, "gt"))
+                    );
+                    listOne.add(
+                        -IDGenerator.Generate(atomicFactory(attribute, rule, "s"))
+                    );
+                    listTwo.add(List.copyOf(listOne));
+                    listOne.clear();
+
                 }
             }
         }
 
-        return Semantics.bigAnd(listThree);
+        return listTwo;
 
     }
 
@@ -137,4 +156,10 @@ public class Restrictions {
 
         return Semantics.bigAnd(listTwo);
     }
+
+    //Auxiliar methods
+    private static Atomic atomicFactory(String attribute, int rule, String type){
+        return new Atomic(attribute + "_" + rule + "_" + type);
+    }
+
 }
