@@ -140,7 +140,6 @@ public class Restrictions {
                                     -IDGenerator.Generate(atomicFactory(rule, j))
                                 );
                             }
-
                             listTwo.add(List.copyOf(listOne));
                         }
                         listOne.clear();
@@ -152,22 +151,23 @@ public class Restrictions {
         return listTwo;
     }
 
-    public static And restrictionFive(Integer m, List<String> attributes, List<List<String>> values, Integer patients){
-        List<Formula> listOne = new ArrayList<>();
-        List<Formula> listTwo = new ArrayList<>();
+    public static List<List<Integer>> restrictionFive(Integer m, List<String> attributes, List<List<String>> values, Integer patients){
+        List<Integer> listOne = new ArrayList<>();
+        List<List<Integer>> listTwo = new ArrayList<>();
 
         for(int j = 0; j < patients; j++){
             if(values.get(j).get(attributes.indexOf("P")).equals("1")){
                 for (int rule = 1; rule <= m ; rule++){
-                    listOne.add(new Atomic("C_" + rule + "_" + (j + 1)));
+                    listOne.add(
+                        IDGenerator.Generate(atomicFactory(rule, j))
+                    );
                 }
-
-                listTwo.add(Semantics.bigOr(listOne));
-                listOne.clear();
+                listTwo.add(List.copyOf(listOne));
             }
+            listOne.clear();
         }
 
-        return Semantics.bigAnd(listTwo);
+        return listTwo;
     }
 
     //Auxiliar methods
