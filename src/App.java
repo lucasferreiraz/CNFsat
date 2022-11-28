@@ -3,97 +3,52 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
-import abstractions.operators.And;
-import functions.Functions;
-import restrictions.AuxiliarBuilders;
+import org.sat4j.core.VecInt;
+import org.sat4j.minisat.SolverFactory;
+import org.sat4j.specs.IProblem;
+import org.sat4j.specs.ISolver;
+
 import restrictions.Restrictions;
-import semantic.Semantics;
 
 public class App {
+
     public static void main(String[] args) throws Exception {
         
         List<String> attributes = new ArrayList<>();
         List<List<String>> values = new ArrayList<>();
+
         readData(attributes, values, args[0]);
 
         Integer patients = values.size();
-        Integer m = Integer.parseInt(args[1]);         
+        Integer m = Integer.parseInt(args[1]);
+        
+        ISolver solver = SolverFactory.newDefault();
+        solver.newVar(1000000);
+        solver.setExpectedNumberOfClauses(500000);
 
-        And f1 = Restrictions.restrictionOne(m, attributes);
-        And f2 = Restrictions.restrictionTwo(m, attributes);
-        And f3 = Restrictions.restrictionThree(m, attributes, values, patients);
-        And f4 = Restrictions.restrictionFour(m, attributes, values, patients);
-        And f5 = Restrictions.restrictionFive(m, attributes, values, patients);
-
-        And F = Semantics.bigAnd(Arrays.asList(f1, f2, f3, f4, f5));
-
-        HashMap<String, Boolean> interpretation = Functions.satisfabilityBruteForce(F);
-
-        System.out.println(attributes);
-
-        for(int i = 0; i < values.size(); i++){
-            System.out.println(values.get(i));
-        }
-
-        System.out.println("\nNumber of supposed rules: " + m);
-
-        System.out.println("\nInterpretation: --------------->");
-        System.out.println(Functions.satisfabilityBruteForce(F));
+        List<List<Integer>> list = Restrictions.restrictionOne(m, attributes);
 
         
-        if(interpretation != null){
-
-            System.out.println("\nFor " + m + " rules, it was possible to generate a set such that:");
-            System.out.println(AuxiliarBuilders.rulesSet(m, attributes, interpretation));
-            System.out.println("\n");
-
-            System.out.println("In this way, applying to the Dataset above, we conclude the pathology of all " + patients + " patients in such a way that:\n");
-
-            List<String> reports = AuxiliarBuilders.checkPatology(m, patients, attributes, values, interpretation);
-            //List<String> list = new ArrayList<String>(reports);
-            //Collections.sort(list);
-
-            for (String report : reports) {
-                System.out.println(report);
-            }
-        } else {
-            System.out.println("The assumed number of rules does not generate a satisfiable formula, or...");
-            System.out.println("the generated formula is not satisfiable. D;");
+        for(List<Integer> clause : list){
+            
+            int c[] = clause.stream().map(i -> (i == null ? 0 : i)).mapToInt(Integer::intValue).toArray();
+            solver.addClause(new VecInt(c));
         }
         
+
+        IProblem problem = solver;
+
+        for(int i = 0; i < problem.findModel().length; i++){
+            int a[] = problem.findModel();
+            System.out.println(a[i]);
+        }
+            
+
     }
 
     public static void readData(List<String> attributes, List<List<String>> values, String fileName){
-
-        /*
-        String absolutePath = new File("").getAbsolutePath();
-        String relativePath = "/src/data/";
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(absolutePath + relativePath + fileName))) {
-            
-            //points to the first line of the file
-            String line = br.readLine();
-            for(String s : line.split(",")){
-                attributes.add(s);
-            }
-
-            //points to the second line of the file
-            line = br.readLine();
-
-            while(line != null){
-                List<String> tmp = Arrays.asList(line.split(","));
-                values.add(tmp);
-                
-                line = br.readLine();
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-         */
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
             App.class.getResourceAsStream("/data/" + fileName)))) {
