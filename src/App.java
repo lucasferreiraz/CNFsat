@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.sat4j.core.VecInt;
-import org.sat4j.minisat.SolverFactory;
-import org.sat4j.specs.IProblem;
-import org.sat4j.specs.ISolver;
-
+import functions.Functions;
+import restrictions.AuxiliarBuilders;
 import restrictions.Restrictions;
 
 public class App {
@@ -23,28 +20,28 @@ public class App {
 
         Integer patients = values.size();
         Integer m = Integer.parseInt(args[1]);
-        
-        ISolver solver = SolverFactory.newDefault();
-        solver.newVar(1000000);
-        solver.setExpectedNumberOfClauses(500000);
 
-        List<List<Integer>> list = Restrictions.restrictionOne(m, attributes);
+        List<List<Integer>> f1 = Restrictions.restrictionOne(m, attributes);
+        List<List<Integer>> f3 = Restrictions.restrictionThree(m, attributes, values, patients);
+        List<List<Integer>> f4 = Restrictions.restrictionFour(m, attributes, values, patients);
+        List<List<Integer>> f5 = Restrictions.restrictionFive(m, attributes, values, patients);
 
-        
-        for(List<Integer> clause : list){
-            
-            int c[] = clause.stream().map(i -> (i == null ? 0 : i)).mapToInt(Integer::intValue).toArray();
-            solver.addClause(new VecInt(c));
+        List<List<Integer>> finalFormula = new ArrayList<>();
+
+        finalFormula.addAll(f1);
+        finalFormula.addAll(f3);
+        finalFormula.addAll(f4);
+        finalFormula.addAll(f5);
+
+        System.out.println(Functions.interpretationLiterals(finalFormula));
+
+        System.out.println(AuxiliarBuilders.rulesSet(m, attributes, finalFormula));
+
+        List<String> reports = AuxiliarBuilders.checkPatology(m, patients, attributes, values, finalFormula);
+
+        for (String report : reports) {
+            System.out.println(report);
         }
-        
-
-        IProblem problem = solver;
-
-        for(int i = 0; i < problem.findModel().length; i++){
-            int a[] = problem.findModel();
-            System.out.println(a[i]);
-        }
-            
 
     }
 
