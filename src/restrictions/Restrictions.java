@@ -170,11 +170,11 @@ public class Restrictions {
     }
 
     //Auxiliar methods
-    private static Atomic atomicFactory(String attribute, int rule, String type){
+    protected static Atomic atomicFactory(String attribute, int rule, String type){
         return new Atomic(attribute + "_" + rule + "_" + type);
     }
 
-    private static Atomic atomicFactory(int rule, int patient){
+    protected static Atomic atomicFactory(int rule, int patient){
         return new Atomic("C_" + rule + "_" + (patient + 1));
     }
 

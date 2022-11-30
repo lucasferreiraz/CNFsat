@@ -1,6 +1,7 @@
 package functions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -91,6 +92,36 @@ public class Functions {
             Boolean right = truthValue(and.getRight(), interpretation);
 
             return ((left && right) ? true : false);
+        }
+
+        return null;
+    }
+
+    public static int[] interpretation(List<List<Integer>> formula){
+        ISolver solver = SolverFactory.newDefault();
+        solver.newVar(1000000);
+        solver.setExpectedNumberOfClauses(500000);
+
+        for(List<Integer> clause : formula){
+            
+            int c[] = new int[toPrimitiveInt(clause).length];
+            c = toPrimitiveInt(clause);
+
+            try {
+                solver.addClause(new VecInt(c));
+                c = new int[0];
+            } catch (ContradictionException e) {
+                e.printStackTrace();
+            }
+        }
+
+        IProblem problem = solver;
+
+        try {
+            int atoms[] = problem.findModel();
+            return atoms;
+        } catch (TimeoutException e) {
+            e.printStackTrace();
         }
 
         return null;
@@ -218,6 +249,11 @@ public class Functions {
         }
 
         return secondStack;
+    }
+
+    public static int[] copy(int array[]){
+        int vector[] = Arrays.copyOf(array, array.length);
+        return vector;
     }
 
     public static int[] toPrimitiveInt(List<Integer> list){

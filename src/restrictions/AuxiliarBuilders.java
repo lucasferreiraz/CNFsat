@@ -1,24 +1,26 @@
 package restrictions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import functions.Functions;
+import functions.IDGenerator;
 
 public class AuxiliarBuilders {
     
-    public static List<String> rulesSet(Integer m, List<String> attributes, HashMap<String, Boolean> interpretation){
+    public static List<String> rulesSet(Integer m, List<String> attributes,  List<List<Integer>> formula){
         List<String> listOne = new ArrayList<>();
         List<String> listTwo = new ArrayList<>();
 
-        HashMap<String, Boolean> interpretationCopy = Functions.copy(interpretation);
+        int interpretationCopy[] = Functions.interpretation(formula);
 
         for(int rule = 1; rule <= m; rule++){
             for(String attribute : attributes){
                 if(!attribute.equals("P")){
-                    if(!interpretationCopy.get(attribute + "_" + rule + "_" + "s")){
-                        if(interpretationCopy.get(attribute + "_" + rule + "_" + "gt")){
+                    if(contains(-IDGenerator.Generate(Restrictions.atomicFactory(attribute, rule, "s")), interpretationCopy)){
+                        if(contains(IDGenerator.Generate(Restrictions.atomicFactory(attribute, rule, "gt")), interpretationCopy)){
                             String attributeModified = attribute.replaceFirst("<=", ">");
                             listOne.add(attributeModified);
                         } else {
@@ -37,8 +39,7 @@ public class AuxiliarBuilders {
     public static List<String> checkPatology(Integer m, Integer p, List<String> attributes, List<List<String>> values, HashMap<String, Boolean> interpretation){
         
         List<String> listOne = new ArrayList<>();
-        List<String> listTwo = new ArrayList<>();
-        //Set<String> set = new HashSet<>();
+        List<String> listTwo = new ArrayList<>();   
 
         HashMap<String, Boolean> interpretationCopy = Functions.copy(interpretation);
 
@@ -73,21 +74,7 @@ public class AuxiliarBuilders {
                     else{ listTwo.add(diagnosis(patient, 1)); } 
                 }
                 listOne.clear();
-                
-
-                /*
-                if(s == listOne.size()){
-                    if(set.contains(diagnosis(patient, 0))){
-                        set.remove(diagnosis(patient, 0));
-                        set.add(diagnosis(patient, 1));
-                    } else {
-                        set.add(diagnosis(patient, 1));
-                    }
-                } else {
-                    set.add(diagnosis(patient, 0));
-                }
-                listOne.clear();
-                 */
+            
             }
         }
 
@@ -96,6 +83,12 @@ public class AuxiliarBuilders {
 
     private static String diagnosis(int patient, int patology){
        return (patology == 1) ? "Patient " + (patient + 1) + " has patology" : "Patient " + (patient + 1) + " has no patology";
+    }
+
+    private static boolean contains(int value, int array[]){
+        boolean found = Arrays.stream(array)
+                              .anyMatch(num -> num == value);
+        return found;
     }
 
 }
