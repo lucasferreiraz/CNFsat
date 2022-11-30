@@ -36,20 +36,20 @@ public class AuxiliarBuilders {
         return listTwo;
     }
 
-    public static List<String> checkPatology(Integer m, Integer p, List<String> attributes, List<List<String>> values, HashMap<String, Boolean> interpretation){
+    public static List<String> checkPatology(Integer m, Integer p, List<String> attributes, List<List<String>> values, List<List<Integer>> formula){
         
         List<String> listOne = new ArrayList<>();
         List<String> listTwo = new ArrayList<>();   
 
-        HashMap<String, Boolean> interpretationCopy = Functions.copy(interpretation);
+        int interpretationCopy[] = Functions.interpretation(formula);
 
         for(int patient = 0; patient < p; patient++){
             for(int rule = 1; rule <= m; rule++){
                 int s = 0;
                 for(String attribute : attributes){
                     if(!attribute.equals("P")){
-                        if(!interpretationCopy.get(attribute + "_" + rule + "_" + "s")){
-                            if(interpretationCopy.get(attribute + "_" + rule + "_" + "gt")){
+                        if(contains(-IDGenerator.Generate(Restrictions.atomicFactory(attribute, rule, "s")), interpretationCopy)){
+                            if(contains(IDGenerator.Generate(Restrictions.atomicFactory(attribute, rule, "gt")), interpretationCopy)){
                                 String attributeModified = attribute.replaceFirst("<=", ">");
                                 listOne.add(attributeModified);
                                 if(values.get(patient).get(attributes.indexOf(attribute)).equals("0")) { s=s+1 ; }
