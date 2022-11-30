@@ -6,7 +6,6 @@ import java.util.List;
 import abstractions.formulas.Atomic;
 import abstractions.formulas.Formula;
 import abstractions.operators.And;
-import abstractions.operators.Implies;
 import abstractions.operators.Not;
 import functions.IDGenerator;
 import semantic.Semantics;
@@ -176,7 +175,7 @@ public class Restrictions {
     }
 
     private static Atomic atomicFactory(int rule, int patient){
-        return new Atomic("C_" + rule + "_" + patient);
+        return new Atomic("C_" + rule + "_" + (patient + 1));
     }
 
 }
