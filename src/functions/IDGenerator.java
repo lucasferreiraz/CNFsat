@@ -1,6 +1,7 @@
 package functions;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import abstractions.formulas.Formula;
 
@@ -35,11 +36,20 @@ public class IDGenerator {
         return ID;
     }
 
-    public HashMap<Formula, Integer> getLiterals() {
+    public static HashMap<Formula, Integer> getLiterals() {
         return literals;
     }
 
-    
+    public static Formula getLiteral(int value){
+
+        for(Entry<Formula, Integer> entry: literals.entrySet()) {
+            if(entry.getValue().equals(Math.abs(value))) {
+              return entry.getKey();
+            }
+        }
+
+        return null;
+    }
 
 
 }
