@@ -66,21 +66,23 @@ public class Restrictions {
 
     }
 
-    public static And restrictionTwo(Integer m, List<String> attributes){
-        List<Formula> listOne = new ArrayList<>();
-        List<Formula> listTwo = new ArrayList<>();
+    public static List<List<Integer>> restrictionTwo(Integer m, List<String> attributes){
+        List<Integer> listOne = new ArrayList<>();
+        List<List<Integer>> listTwo = new ArrayList<>();
 
         for (int rule = 1; rule <= m ; rule++){
             for (String attribute : attributes){
                 if(!attribute.equals("P")){
-                    listOne.add(new Not(new Atomic(attribute + "_" + rule + "_" + "s")));
+                    listOne.add(
+                        -IDGenerator.Generate(atomicFactory(attribute, rule, "s"))
+                    );
                 }
             }
-            listTwo.add(Semantics.bigOr(listOne));
+            listTwo.add(List.copyOf(listOne));
             listOne.clear();
         }
 
-        return Semantics.bigAnd(listTwo);
+        return listTwo;
     }
 
     public static List<List<Integer>> restrictionThree(Integer m, List<String> attributes, List<List<String>> values, Integer patients){
