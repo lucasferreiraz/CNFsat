@@ -1,14 +1,10 @@
-    package restrictions;
+package restrictions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import abstractions.formulas.Atomic;
-import abstractions.formulas.Formula;
-import abstractions.operators.And;
-import abstractions.operators.Not;
 import functions.IDGenerator;
-import semantic.Semantics;
 
 public class Restrictions {
 

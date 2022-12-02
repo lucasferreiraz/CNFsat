@@ -22,6 +22,7 @@ public class App {
         Integer m = Integer.parseInt(args[1]);
 
         List<List<Integer>> f1 = Restrictions.restrictionOne(m, attributes);
+        List<List<Integer>> f2 = Restrictions.restrictionTwo(m, attributes);
         List<List<Integer>> f3 = Restrictions.restrictionThree(m, attributes, values, patients);
         List<List<Integer>> f4 = Restrictions.restrictionFour(m, attributes, values, patients);
         List<List<Integer>> f5 = Restrictions.restrictionFive(m, attributes, values, patients);
@@ -29,18 +30,39 @@ public class App {
         List<List<Integer>> finalFormula = new ArrayList<>();
 
         finalFormula.addAll(f1);
+        finalFormula.addAll(f2);
         finalFormula.addAll(f3);
         finalFormula.addAll(f4);
         finalFormula.addAll(f5);
 
-        System.out.println(Functions.interpretationLiterals(finalFormula));
+        System.out.println(attributes);
 
-        System.out.println(AuxiliarBuilders.rulesSet(m, attributes, finalFormula));
+        for(int i = 0; i < values.size(); i++){
+            System.out.println(values.get(i));
+        }
 
-        List<String> reports = AuxiliarBuilders.checkPatology(m, patients, attributes, values, finalFormula);
+        System.out.println("\nNumber of supposed rules: " + m);
 
-        for (String report : reports) {
-            System.out.println(report);
+        System.out.println("\nInterpretation: --------------->");
+        
+
+        if(Functions.hasSolution(finalFormula)){
+            System.out.println(Functions.interpretationLiterals(finalFormula));
+
+            System.out.println("\nFor " + m + " rules, it was possible to generate a set such that:");
+            System.out.println(AuxiliarBuilders.rulesSet(m, attributes, finalFormula));
+            System.out.println("\n");
+
+            System.out.println("In this way, applying to the Dataset above, we conclude the pathology of all " + patients + " patients in such a way that:\n");
+
+            List<String> reports = AuxiliarBuilders.checkPatology(m, patients, attributes, values, finalFormula);
+
+            for (String report : reports) {
+                System.out.println(report);
+            }
+        } else {
+            System.out.println("The assumed number of rules does not generate a satisfiable formula, or...");
+            System.out.println("the generated formula is not satisfiable. D;");
         }
 
     }
