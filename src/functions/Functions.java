@@ -173,6 +173,29 @@ public class Functions {
 
     }
 
+    public static boolean hasSolution(List<List<Integer>> formula) throws TimeoutException{
+        ISolver solver = SolverFactory.newDefault();
+        solver.newVar(1000000);
+        solver.setExpectedNumberOfClauses(500000);
+
+        for(List<Integer> clause : formula){
+            
+            int c[] = new int[toPrimitiveInt(clause).length];
+            c = toPrimitiveInt(clause);
+
+            try {
+                solver.addClause(new VecInt(c));
+                c = new int[0];
+            } catch (ContradictionException e) {
+                e.printStackTrace();
+            }
+        }
+
+        IProblem problem = solver;
+
+        return problem.isSatisfiable();
+    }
+
     public static HashMap<String, Boolean> satisfabilityBruteForce(Formula formula){
 
         Stack<String> stackAtoms = stackAtoms(atoms(formula));
