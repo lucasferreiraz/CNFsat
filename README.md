@@ -125,8 +125,8 @@ O arquivo **column_bin_36a_155p.csv** obteve o seguinte resultado:
     </tr>
 </table>
 
-O conjunto de regras gerado pelo arquivo acima gera [este relatório](/src/records/36a_155_record.txt) que possui uma taxa de acertos de 100% como esperado, visto que o resultado do laudo dos pacientes deste mesmo arquivo obedece as regras geradas pelo mesmo arquivo.
+O conjunto de regras gerado pelo arquivo acima gera [este relatório](/src/records/36a_155p_record.txt) que possui uma taxa de acertos de 100% como esperado, visto que o resultado do laudo dos pacientes deste mesmo arquivo obedece as regras geradas pelo mesmo arquivo.
 
-Entretanto, ao aplicar o conjunto de regras gerado pelo arquivo acima no conjunto de valores do arquivo **column_bin_36a_155p_test.csv** é notório uma discrepância no diagnóstico de alguns pacientes do arquivo citado como é possível ver [neste relatório](/src/records/36a_155_test_record.txt) gerado.
+Entretanto, ao aplicar o conjunto de regras gerado pelo arquivo acima no conjunto de valores do arquivo **column_bin_36a_155p_test.csv** é notório uma discrepância no diagnóstico de alguns pacientes do arquivo citado como é possível ver [neste relatório](/src/records/36a_155p_test_record.txt) gerado.
 
 Comparando os dois relatórios, é possível quantificar que a discrepância é de 24 pacientes de um total de 155. Ou seja, **15,48387%** dos diagnósticos não obedecem ao conjunto de regras aplicado, desta forma, possuindo uma taxa de acerto de **84,51612%.**
