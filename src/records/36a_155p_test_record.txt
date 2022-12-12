@@ -1,0 +1,155 @@
+Patient 1 has patology
+Patient 2 has patology
+Patient 3 has patology
+Patient 4 has patology
+Patient 5 has patology
+Patient 6 has patology
+Patient 7 has patology
+Patient 8 has no patology
+Patient 9 has patology
+Patient 10 has patology
+Patient 11 has patology
+Patient 12 has patology
+Patient 13 has patology
+Patient 14 has patology
+Patient 15 has patology
+Patient 16 has no patology
+Patient 17 has patology
+Patient 18 has patology
+Patient 19 has patology
+Patient 20 has patology
+Patient 21 has patology
+Patient 22 has patology
+Patient 23 has patology
+Patient 24 has patology
+Patient 25 has patology
+Patient 26 has patology
+Patient 27 has patology
+Patient 28 has patology
+Patient 29 has patology
+Patient 30 has no patology
+Patient 31 has patology
+Patient 32 has patology
+Patient 33 has patology
+Patient 34 has patology
+Patient 35 has patology
+Patient 36 has patology
+Patient 37 has patology
+Patient 38 has patology
+Patient 39 has patology
+Patient 40 has patology
+Patient 41 has patology
+Patient 42 has patology
+Patient 43 has patology
+Patient 44 has patology
+Patient 45 has patology
+Patient 46 has patology
+Patient 47 has no patology
+Patient 48 has patology
+Patient 49 has patology
+Patient 50 has patology
+Patient 51 has patology
+Patient 52 has patology
+Patient 53 has patology
+Patient 54 has patology
+Patient 55 has patology
+Patient 56 has patology
+Patient 57 has patology
+Patient 58 has patology
+Patient 59 has patology
+Patient 60 has no patology
+Patient 61 has patology
+Patient 62 has patology
+Patient 63 has patology
+Patient 64 has patology
+Patient 65 has patology
+Patient 66 has patology
+Patient 67 has patology
+Patient 68 has patology
+Patient 69 has patology
+Patient 70 has patology
+Patient 71 has patology
+Patient 72 has patology
+Patient 73 has patology
+Patient 74 has patology
+Patient 75 has patology
+Patient 76 has no patology
+Patient 77 has patology
+Patient 78 has patology
+Patient 79 has patology
+Patient 80 has patology
+Patient 81 has patology
+Patient 82 has patology
+Patient 83 has patology
+Patient 84 has patology
+Patient 85 has patology
+Patient 86 has patology
+Patient 87 has patology
+Patient 88 has patology
+Patient 89 has patology
+Patient 90 has patology
+Patient 91 has patology
+Patient 92 has patology
+Patient 93 has patology
+Patient 94 has patology
+Patient 95 has patology
+Patient 96 has patology
+Patient 97 has patology
+Patient 98 has patology
+Patient 99 has patology
+Patient 100 has patology
+Patient 101 has patology
+Patient 102 has patology
+Patient 103 has patology
+Patient 104 has patology
+Patient 105 has patology
+Patient 106 has no patology
+Patient 107 has patology
+Patient 108 has patology
+Patient 109 has no patology
+Patient 110 has no patology
+Patient 111 has no patology
+Patient 112 has no patology
+Patient 113 has no patology
+Patient 114 has patology
+Patient 115 has patology
+Patient 116 has patology
+Patient 117 has no patology
+Patient 118 has patology
+Patient 119 has patology
+Patient 120 has no patology
+Patient 121 has no patology
+Patient 122 has no patology
+Patient 123 has no patology
+Patient 124 has no patology
+Patient 125 has no patology
+Patient 126 has patology
+Patient 127 has no patology
+Patient 128 has no patology
+Patient 129 has no patology
+Patient 130 has patology
+Patient 131 has patology
+Patient 132 has no patology
+Patient 133 has no patology
+Patient 134 has patology
+Patient 135 has no patology
+Patient 136 has no patology
+Patient 137 has no patology
+Patient 138 has no patology
+Patient 139 has no patology
+Patient 140 has patology
+Patient 141 has no patology
+Patient 142 has no patology
+Patient 143 has no patology
+Patient 144 has no patology
+Patient 145 has patology
+Patient 146 has no patology
+Patient 147 has no patology
+Patient 148 has no patology
+Patient 149 has patology
+Patient 150 has patology
+Patient 151 has patology
+Patient 152 has no patology
+Patient 153 has no patology
+Patient 154 has no patology
+Patient 155 has patology

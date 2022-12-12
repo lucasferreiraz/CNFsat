@@ -45,6 +45,7 @@ public class App {
 
         System.out.println("\nInterpretation: --------------->");
         
+        long startTime = System.nanoTime();
 
         if(Functions.hasSolution(finalFormula)){
             System.out.println(Functions.interpretationLiterals(finalFormula));
@@ -56,10 +57,15 @@ public class App {
             System.out.println("In this way, applying to the Dataset above, we conclude the pathology of all " + patients + " patients in such a way that:\n");
 
             List<String> reports = AuxiliarBuilders.checkPatology(m, patients, attributes, values, finalFormula);
-
+            
             for (String report : reports) {
                 System.out.println(report);
             }
+            
+            long elapsedTime = System.nanoTime() - startTime;
+            System.out.println("Total execution time in millis: "
+                + elapsedTime/1000000);
+
         } else {
             System.out.println("The assumed number of rules does not generate a satisfiable formula, or...");
             System.out.println("the generated formula is not satisfiable. D;");

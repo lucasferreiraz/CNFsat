@@ -9,7 +9,7 @@
             "name": "Launch App",
             "request": "launch",
             "mainClass": "App",
-            "args": "column_bin_3a_2p.csv 2",
+            "args": "column_bin_36a_155p.csv 9",
             "projectName": "CNFsat_7f7faf29"
         }
     ]
